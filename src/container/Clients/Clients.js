@@ -63,13 +63,8 @@ class Clients extends Component {
 
     }
 
-    generateKey = (pre) => {
-        return `${pre}_${new Date().getTime()}`;
-    }
-
     render() {
         const { classes } = this.props;
-
 
         return (
             <Fragment>
@@ -78,7 +73,7 @@ class Clients extends Component {
                     <TableHead fields={clientFields} />
                     <TableBody>
                         {this.state.clients.map(client => (
-                            <TableRow hover key={client._id} onClick={this.clientClickHandler(client)}>
+                            <TableRow hover key={client._id} onClick={() => this.clientClickHandler(client)}>
                                 {Object.values(this.formatData(client, clientFields)).map(field => (
                                     <TableCell key={shortid.generate()} data={this.formatData(client, clientFields)}>{field}</TableCell>
                                 ))}

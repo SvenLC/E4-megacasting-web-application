@@ -17,7 +17,7 @@ const toolBar = (props) => {
             <Typography variant="headline" style={{ flex: 3 }}>
                 {props.name}
             </Typography>
-            <Fab color="primary" size='small' aria-label="Add" className={classes.fab} onClick={props.newElement}>
+            <Fab color="primary" size='small' aria-label="Ajouter" className={classes.fab} onClick={props.newElement}>
                 <AddIcon />
             </Fab>
         </Toolbar>

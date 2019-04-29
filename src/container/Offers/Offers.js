@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import { withStyles, Table, TableHead, TableBody, TableCell, TableRow, Fab } from '@material-ui/core';
+import { withStyles, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
+import shortid from 'shortid'
 
-
-import { Typography } from '@material-ui/core';
-import Toolbar from '@material-ui/core/Toolbar';
+import ToolBar from '../../Components/Tables/ToolBar/ToolBar';
+import TableHead from '../../Components/Tables/TableHead/TableHead';
 
 
 const styles = theme => ({
@@ -15,7 +15,7 @@ const styles = theme => ({
         overflowX: 'auto'
     },
     table: {
-        minWidth: 700,
+        minWidth: 700
     },
     fab: {
         marginRight: theme.spacing.unit * 6,
@@ -24,6 +24,25 @@ const styles = theme => ({
         display: 'none',
     },
 });
+
+const offerFields = {
+
+    reference: "Référence",
+    title: "Titre",
+    startDatePublication: "Date de début de publication",
+    publicationDuration: "Durée de publication",
+    startDateContract: "Date de début du contrat",
+    jobNumber: "Postes",
+    // "jobDescription": "Cherche chanteur pour soirée reprise années 80",
+    contract: "Contrat",
+    // "profileDescription": "Vous aimez chanter du Balavoine ? Ce poste est pour vous !",
+    // "job": "Chanteur",
+    // "domain": "Spectacle vivant",
+    // "contact": "animfun@gmail.com",
+    location: "Brest",
+    client: "Client"
+    // "__v": 0
+}
 
 class Offers extends Component {
     state = {
@@ -46,8 +65,20 @@ class Offers extends Component {
 
     }
 
-    test() {
-        console.log('test')
+    newOfferClickHandler = () => {
+        this.props.history.push({ pathname: '/offer/new' });
+    }
+
+    formatData = (data, fieldsName) => {
+        const arrayFieldsName = Object.keys(fieldsName)
+        let formatedData = {};
+
+        for (let fields of arrayFieldsName) {
+            formatedData[fields] = data[fields]
+
+        }
+        return formatedData;
+
     }
 
     render() {
@@ -55,34 +86,20 @@ class Offers extends Component {
 
         return (
             <Fragment>
-                <Toolbar>
-                    <Typography variant="headline" style={{ flex: 3 }}>
-                        Offres
-                    </Typography>
-                    <Fab color="primary" size='small' aria-label="Add" className={classes.fab} onClick={this.test}>
-                        {/* <AddIcon /> */}
-                    </Fab>
-                </Toolbar>
+                <ToolBar name={'Offres'} newElement={this.newOffertClickHandler} />
                 <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Référence</TableCell>
-                            <TableCell>Titre</TableCell>
-                            <TableCell>Description</TableCell>
-                            <TableCell>Client</TableCell>
-                        </TableRow>
-                    </TableHead>
+                    <TableHead fields={offerFields} />
                     <TableBody>
                         {this.state.offers.map(offer => (
                             <TableRow hover key={offer._id} onClick={() => this.offerClickHandler(offer)}>
-                                {/* <Offer
-                                    key={offer._id}
-                                    offer={offer} /> */}
+                                {Object.values(this.formatData(offer, offerFields)).map(field => (
+                                    <TableCell key={shortid.generate()} data={this.formatData(offer, offerFields)}>{field}</TableCell>
+                                ))}
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
-            </Fragment>
+            </Fragment >
 
         );
     }

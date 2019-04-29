@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
 import { Grid } from '@material-ui/core';
 
-// import AppBar from '../components/UI/AppBar/AppBar';
+import AppBar from '../UI/AppBar/AppBar';
 import SideDrawer from '../UI/SideDrawer/SideDrawer';
 import Dashboard from '../UI/Dashboard/Dashboard';
 
 const Layout = (props) => {
     return (
         <Fragment>
-            {/* <AppBar /> */}
+            <AppBar />
             <Grid container>
                 <Grid item xs={2}>
                     <SideDrawer />
