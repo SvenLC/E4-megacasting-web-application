@@ -36,22 +36,21 @@ class FullOffer extends Component {
     };
 
     componentDidMount() {
-        console.log(this.props.match.params.id)
         if (this.props.match.params.id === 'new') {
             let offer = {
-                name: null,
-                address: null,
-                legalStatus: null,
-                siret: null
+                reference: this.state.offer.reference,
+                title: this.state.offer.title,
+                startDatePublication: this.state.offer.startDatePublication
             }
-            this.setState({ offer: offer })
+            this.setState({ offer: offer });
         }
         else {
-            axios.get('http://localhost:4000/castingOffers/' + this.props.match.params.id)
+            axios.get('http://localhost:4000/castings/' + this.props.match.params.id)
                 .then(response => {
                     this.setState({ offer: response.data });
                 });
         }
+
     }
 
     handleChange = name => event => {
@@ -62,21 +61,21 @@ class FullOffer extends Component {
 
         if (this.props.match.params.id === 'new') {
 
-            axios.post('http://localhost:4000/castingOffers/', {
+            axios.post('http://localhost:4000/castings/', {
                 reference: this.state.offer.reference,
-        title: this.state.offer.title,
-        startDatePublication: this.state.offer.startDatePublication,
-        "publicationDuration": 30,
-        "startDateContract": "2020-01-17T02:24:00.000Z",
-        "jobNumber": 3,
-        "jobDescription": "Cherche chanteur pour soirée reprise années 80",
-        "contract": "CDD",
-        "profileDescription": "Vous aimez chanter du Balavoine ? Ce poste est pour vous !",
-        "job": "Chanteur",
-        "domain": "Spectacle vivant",
-        "contact": "animfun@gmail.com",
-        "location": "Brest",
-        "client": "test",
+                title: this.state.offer.title,
+                startDatePublication: this.state.offer.startDatePublication,
+                "publicationDuration": 30,
+                "startDateContract": "2020-01-17T02:24:00.000Z",
+                "jobNumber": 3,
+                "jobDescription": "Cherche chanteur pour soirée reprise années 80",
+                "contract": "CDD",
+                "profileDescription": "Vous aimez chanter du Balavoine ? Ce poste est pour vous !",
+                "job": "Chanteur",
+                "domain": "Spectacle vivant",
+                "contact": "animfun@gmail.com",
+                "location": "Brest",
+                "client": "test",
             })
                 .then((res) => {
 
@@ -88,7 +87,7 @@ class FullOffer extends Component {
                 })
         }
         else {
-            axios.put('http://localhost:4000/castingOffers/' + this.props.match.params.id, {
+            axios.put('http://localhost:4000/castings/' + this.props.match.params.id, {
                 name: this.state.name,
                 address: this.state.address,
                 legalStatus: this.state.legalStatus,
@@ -107,7 +106,7 @@ class FullOffer extends Component {
     }
 
     deleteOffer = () => {
-        axios.delete('http://localhost:4000/castingOffers/' + this.props.match.params.id)
+        axios.delete('http://localhost:4000/castings/' + this.props.match.params.id)
             .then(response => {
                 this.props.history.push({ pathname: '/castingOffers' });
             })
@@ -117,21 +116,21 @@ class FullOffer extends Component {
     }
 
     render() {
-        let cli = null;
+        let offer = null;
         const { classes } = this.props;
 
         if (this.state.offer) {
-            cli = (
-                <form className={classes.container} noValidate autoComplete="cli">
+            offer = (
+                <form className={classes.container} noValidate autoComplete="offer">
                     <TextField
                         InputProps={{
                             readOnly: this.state.inputProps,
                         }}
                         id="1"
-                        label="Nom"
+                        label="Titre"
                         className={classes.textField}
-                        defaultValue={this.state.offer.name}
-                        onChange={this.handleChange('name')}
+                        defaultValue={this.state.offer.title}
+                        onChange={this.handleChange('title')}
                         margin="normal"
                     />
                     <TextField
@@ -139,10 +138,10 @@ class FullOffer extends Component {
                             readOnly: this.state.inputProps,
                         }}
                         id="2"
-                        label="Adresse"
+                        label="Début publication"
                         className={classes.textField}
-                        defaultValue={this.state.offer.address}
-                        onChange={this.handleChange('address')}
+                        defaultValue={this.state.offer.startDatePublication}
+                        onChange={this.handleChange('startDatePublication')}
                         margin="normal"
                     />
                     <TextField
@@ -159,7 +158,7 @@ class FullOffer extends Component {
 
         return (
             <Fragment>
-                {cli}
+                {offer}
                 <div style={{ margin: "auto", width: "20%" }}>
                     <Fab color="primary" right size='small' aria-label="Sauvegarder" className={classes.fab} onClick={this.saveOffer}>
                         <Save />

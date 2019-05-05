@@ -50,7 +50,7 @@ class Offers extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/castingOffers')
+        axios.get('http://localhost:4000/castings')
             .then(res => {
                 this.setState({ offers: res.data });
             })
