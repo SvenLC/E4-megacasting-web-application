@@ -25,48 +25,41 @@ const styles = theme => ({
     },
 });
 
-const offerFields = {
+const castingFields = {
 
-    reference: "Référence",
     title: "Titre",
-    startDatePublication: "Date de début de publication",
+    datePublication: "Date de début de publication",
     publicationDuration: "Durée de publication",
-    startDateContract: "Date de début du contrat",
-    jobNumber: "Postes",
-    // "jobDescription": "Cherche chanteur pour soirée reprise années 80",
+    // contact: "animfun@gmail.com",
+    job: "Chanteur",
     contract: "Contrat",
-    // "profileDescription": "Vous aimez chanter du Balavoine ? Ce poste est pour vous !",
-    // "job": "Chanteur",
-    // "domain": "Spectacle vivant",
-    // "contact": "animfun@gmail.com",
     location: "Brest",
     client: "Client"
-    // "__v": 0
 }
 
-class Offers extends Component {
+class Castings extends Component {
     state = {
-        offers: []
+        castings: []
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/castings')
+        axios.get('https://megacastingapi.azurewebsites.net/castings')
             .then(res => {
-                this.setState({ offers: res.data });
+                this.setState({ castings: res.data });
             })
             .catch(() => {
 
             });
     }
 
-    offerClickHandler = (offer) => {
-        this.setState({ offer: offer });
-        this.props.history.push({ pathname: '/offer/' + offer._id });
+    castingClickHandler = (casting) => {
+        this.setState({ casting: casting });
+        this.props.history.push({ pathname: '/casting/' + casting._id });
 
     }
 
-    newOfferClickHandler = () => {
-        this.props.history.push({ pathname: '/offer/new' });
+    newCastingClickHandler = () => {
+        this.props.history.push({ pathname: '/casting/new' });
     }
 
     formatData = (data, fieldsName) => {
@@ -81,19 +74,30 @@ class Offers extends Component {
 
     }
 
+    formatDate = (listCasting) => {
+
+        listCasting.forEach(element => {
+            if (element.datePublication) {
+                element.datePublication = element.datePublication.split('-').reverse().join('-');
+            }
+        });
+        return listCasting;
+    }
+
     render() {
         const { classes } = this.props;
+        this.formatDate(this.state.castings);
 
         return (
             <Fragment>
-                <ToolBar name={'Offres'} newElement={this.newOffertClickHandler} />
+                <ToolBar name={'Castings'} newElement={this.newCastingClickHandler} />
                 <Table className={classes.table}>
-                    <TableHead fields={offerFields} />
+                    <TableHead fields={castingFields} />
                     <TableBody>
-                        {this.state.offers.map(offer => (
-                            <TableRow hover key={offer._id} onClick={() => this.offerClickHandler(offer)}>
-                                {Object.values(this.formatData(offer, offerFields)).map(field => (
-                                    <TableCell key={shortid.generate()} data={this.formatData(offer, offerFields)}>{field}</TableCell>
+                        {this.state.castings.map(casting => (
+                            <TableRow hover key={casting._id} onClick={() => this.castingClickHandler(casting)}>
+                                {Object.values(this.formatData(casting, castingFields)).map(field => (
+                                    <TableCell key={shortid.generate()} data={this.formatData(casting, castingFields)}>{field}</TableCell>
                                 ))}
                             </TableRow>
                         ))}
@@ -105,5 +109,5 @@ class Offers extends Component {
     }
 }
 
-export default withStyles(styles)(Offers);
+export default withStyles(styles)(Castings);
 

@@ -11,8 +11,9 @@ const styles = theme => ({
         width: '100%',
         marginTop: theme.spacing.unit * 2,
         marginLeft: theme.spacing.unit * 2,
+        marginRight: theme.spacing.unit * 2,
         overflowX: 'auto',
-        maxWidth: 1400
+        maxWidth: 1200
     }
 });
 

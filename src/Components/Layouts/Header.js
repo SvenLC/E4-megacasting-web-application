@@ -9,16 +9,18 @@ const Layout = (props) => {
     return (
         <Fragment>
             <AppBar />
-            <Grid container>
-                <Grid item xs={2}>
-                    <SideDrawer />
+            <div style={{ margin: '0 auto', width: '1200px' }}>
+                <Grid container>
+                    <Grid item xs={2}>
+                        <SideDrawer />
+                    </Grid>
+                    <Grid item xs={10} >
+                        <Dashboard>
+                            {props.children}
+                        </Dashboard>
+                    </Grid>
                 </Grid>
-                <Grid item xs={10} >
-                    <Dashboard>
-                        {props.children}
-                    </Dashboard>
-                </Grid>
-            </Grid>
+            </div>
         </Fragment >
     )
 };

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { withStyles, List, ListItem, ListItemText, Collapse } from '@material-ui/core';
-import { ExpandLess, ExpandMore} from '@material-ui/icons';
+import { ExpandLess, ExpandMore } from '@material-ui/icons';
 
 const styles = theme => ({
   nested: {
@@ -23,14 +23,14 @@ class CastingList extends Component {
     return (
       <Fragment>
         <ListItem divider button onClick={this.handleClick}>
-          <ListItemText primary="Casting" />
+          <ListItemText primary="Gestion" />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={this.state.open} timeout="auto" unmountOnExit>
           <List component="div" >
-            <Link to='/offers' style={{ textDecoration: 'none' }}>
+            <Link to='/castings' style={{ textDecoration: 'none' }}>
               <ListItem button className={classes.nested}>
-                <ListItemText primary="Offres" />
+                <ListItemText primary="Castings" />
               </ListItem>
             </Link>
             <Link to='/clients' style={{ textDecoration: 'none' }}>

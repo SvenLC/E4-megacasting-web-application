@@ -15,7 +15,7 @@ const appBar = (props) => {
     const { classes } = props;
     return (
         <div className={classes.root}>
-            <AppBar position="relative">
+            <AppBar position="relative" >
                 <Toolbar>
                     <Typography variant="h6" color="inherit" className={classes.grow}>
                         MegaCasting
@@ -28,3 +28,4 @@ const appBar = (props) => {
 }
 
 export default withStyles(styles)(appBar);
+
