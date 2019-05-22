@@ -38,16 +38,11 @@ class Client extends Component {
     componentDidMount() {
         console.log(this.props.match.params.id)
         if (this.props.match.params.id === 'new') {
-            let client = {
-                name: null,
-                address: null,
-                legalStatus: null,
-                siret: null
-            }
-            this.setState({ client: client })
+            let client = {};
+            this.setState({ client: client });
         }
         else {
-            axios.get('http://localhost:4000/clients/' + this.props.match.params.id)
+            axios.get('https://megacastingapi.azurewebsites.net/clients/' + this.props.match.params.id)
                 .then(response => {
                     this.setState({ client: response.data });
                 });
@@ -62,7 +57,7 @@ class Client extends Component {
 
         if (this.props.match.params.id === 'new') {
 
-            axios.post('http://localhost:4000/clients/', {
+            axios.post('https://megacastingapi.azurewebsites.net/clients/', {
                 name: this.state.name,
                 address: this.state.address,
                 legalStatus: this.state.legalStatus,
@@ -78,11 +73,13 @@ class Client extends Component {
                 })
         }
         else {
-            axios.put('http://localhost:4000/clients/' + this.props.match.params.id, {
+            axios.put('https://megacastingapi.azurewebsites.net/clients/' + this.props.match.params.id, {
                 name: this.state.name,
                 address: this.state.address,
+                email: this.state.email,
                 legalStatus: this.state.legalStatus,
                 siret: this.state.siret,
+                rna: this.state.rna
             })
                 .then((res) => {
 
@@ -97,7 +94,7 @@ class Client extends Component {
     }
 
     deleteClient = () => {
-        axios.delete('http://localhost:4000/clients/' + this.props.match.params.id)
+        axios.delete('https://megacastingapi.azurewebsites.net/clients/' + this.props.match.params.id)
             .then(response => {
                 this.props.history.push({ pathname: '/clients' });
             })
@@ -114,9 +111,6 @@ class Client extends Component {
             cli = (
                 <form className={classes.container} noValidate autoComplete="cli">
                     <TextField
-                        InputProps={{
-                            readOnly: this.state.inputProps,
-                        }}
                         id="1"
                         label="Nom"
                         className={classes.textField}
@@ -124,10 +118,8 @@ class Client extends Component {
                         onChange={this.handleChange('name')}
                         margin="normal"
                     />
+
                     <TextField
-                        InputProps={{
-                            readOnly: this.state.inputProps,
-                        }}
                         id="2"
                         label="Adresse"
                         className={classes.textField}
@@ -137,10 +129,34 @@ class Client extends Component {
                     />
                     <TextField
                         id="3"
+                        label="Email"
+                        className={classes.textField}
+                        defaultValue={this.state.client.email}
+                        onChange={this.handleChange('email')}
+                        margin="normal"
+                    />
+                    <TextField
+                        id="4"
                         label="Statut"
                         className={classes.textField}
                         defaultValue={this.state.client.legalStatus}
                         onChange={this.handleChange('legalStatus')}
+                        margin="normal"
+                    />
+                    <TextField
+                        id="5"
+                        label="Siret"
+                        className={classes.textField}
+                        defaultValue={this.state.client.siret}
+                        onChange={this.handleChange('siret')}
+                        margin="normal"
+                    />
+                    <TextField
+                        id="6"
+                        label="RNA"
+                        className={classes.textField}
+                        defaultValue={this.state.client.rna}
+                        onChange={this.handleChange('rna')}
                         margin="normal"
                     />
                 </form>

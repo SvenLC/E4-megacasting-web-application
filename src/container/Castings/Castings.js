@@ -26,14 +26,14 @@ const styles = theme => ({
 });
 
 const castingFields = {
-
+    ref: "Référence",
     title: "Titre",
     datePublication: "Date de début de publication",
     publicationDuration: "Durée de publication",
     // contact: "animfun@gmail.com",
-    job: "Chanteur",
+    job: "Métier",
     contract: "Contrat",
-    location: "Brest",
+    location: "Localisation",
     client: "Client"
 }
 
@@ -84,9 +84,20 @@ class Castings extends Component {
         return listCasting;
     }
 
+    formatId = (listCasting) => {
+
+        listCasting.forEach(element => {
+            if (element._id) {
+                element['ref'] = element._id.substr(-8);
+            }
+        });
+        return listCasting;
+    }
+
     render() {
         const { classes } = this.props;
         this.formatDate(this.state.castings);
+        this.formatId(this.state.castings);
 
         return (
             <Fragment>

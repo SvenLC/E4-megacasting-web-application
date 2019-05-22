@@ -6,6 +6,7 @@ import Casting from './container/Castings/Castings';
 import FullCasting from './container/Castings/FullCasting/FullCasting';
 import Clients from './container/Clients/Clients';
 import FullClient from './container/Clients/FullClient/FullClient';
+import Partner from './container/Partners/Partners';
 
 
 
@@ -19,6 +20,7 @@ class App extends Component {
           <Route path="/casting/:id" component={FullCasting} />
           <Route path="/clients" exact component={Clients} />
           <Route path='/client/:id' exact component={FullClient} />
+          <Route path='/partners' exact component={Partner} />
 
         </Switch>
       </Layout>

@@ -34,9 +34,7 @@ class FullCasting extends Component {
 
     componentDidMount() {
         if (this.props.match.params.id === 'new') {
-            let casting = {
-
-            }
+            let casting = {};
             this.setState({ casting: casting });
         }
         else {
@@ -195,7 +193,7 @@ class FullCasting extends Component {
                         fullWidth
                         margin="normal"
                         multiline={true}
-                        rows={15}
+                        rows={20}
                         rowsMax={25}
                     />
                 </form>

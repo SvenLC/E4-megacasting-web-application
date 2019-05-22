@@ -17,27 +17,24 @@ const styles = theme => ({
     },
 });
 
-const clientFields = {
+const partnerFields = {
     ref: 'Référence',
     name: 'Nom',
-    address: 'Adresse',
-    email: 'Email',
-    legalStatus: 'Statut',
-    siret: 'Siret',
-    rna: 'RNA'
+    login: 'Identifiant',
+    mdp: 'Mot de passe'
 }
 
 
 
-class Clients extends Component {
+class Partners extends Component {
     state = {
-        clients: []
+        partners: []
     }
 
     componentDidMount() {
-        axios.get('https://megacastingapi.azurewebsites.net/clients')
+        axios.get('https://megacastingapi.azurewebsites.net/partners')
             .then(res => {
-                this.setState({ clients: res.data });
+                this.setState({ partners: res.data });
 
             })
             .catch(() => {
@@ -45,14 +42,14 @@ class Clients extends Component {
             });
     }
 
-    clientClickHandler = (client) => {
-        this.setState({ client: client });
-        this.props.history.push({ pathname: '/client/' + client._id });
+    partnerClickHandler = (partner) => {
+        this.setState({ partner: partner });
+        this.props.history.push({ pathname: '/partner/' + partner._id });
 
     }
 
-    newClientClickHandler = () => {
-        this.props.history.push({ pathname: '/client/new' });
+    newPartnerClickHandler = () => {
+        this.props.history.push({ pathname: '/partner/new' });
     }
 
     formatData = (data, fieldsName) => {
@@ -82,14 +79,14 @@ class Clients extends Component {
 
         return (
             <Fragment>
-                <ToolBar name={'Client'} newElement={this.newClientClickHandler} />
+                <ToolBar name={'Partner'} newElement={this.newPartnerClickHandler} />
                 <Table className={classes.table}>
-                    <TableHead fields={clientFields} />
+                    <TableHead fields={partnerFields} />
                     <TableBody>
-                        {this.state.clients.map(client => (
-                            <TableRow hover key={client._id} onClick={() => this.clientClickHandler(client)}>
-                                {Object.values(this.formatData(client, clientFields)).map(field => (
-                                    <TableCell key={shortid.generate()} data={this.formatData(client, clientFields)}>{field}</TableCell>
+                        {this.state.partners.map(partner => (
+                            <TableRow hover key={partner._id} onClick={() => this.partnerClickHandler(partner)}>
+                                {Object.values(this.formatData(partner, partnerFields)).map(field => (
+                                    <TableCell key={shortid.generate()} data={this.formatData(partner, partnerFields)}>{field}</TableCell>
                                 ))}
                             </TableRow>
                         ))}
@@ -105,4 +102,4 @@ class Clients extends Component {
 }
 
 
-export default withStyles(styles)(Clients);
+export default withStyles(styles)(Partners);
