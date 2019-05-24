@@ -84,14 +84,14 @@ class Castings extends Component {
         return listCasting;
     }
 
-    formatId = (listCasting) => {
+    formatId = (list) => {
 
-        listCasting.forEach(element => {
+        list.forEach(element => {
             if (element._id) {
                 element['ref'] = element._id.substr(-8);
             }
         });
-        return listCasting;
+        return list;
     }
 
     render() {

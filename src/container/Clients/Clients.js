@@ -79,6 +79,7 @@ class Clients extends Component {
 
     render() {
         const { classes } = this.props;
+        this.formatId(this.state.clients);
 
         return (
             <Fragment>

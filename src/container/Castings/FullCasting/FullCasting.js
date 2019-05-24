@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-import { withStyles, TextField, Fab } from '@material-ui/core';
+import { withStyles, TextField, Fab, InputLabel, Select, Input, MenuItem, FormControl } from '@material-ui/core';
 import { Delete, Save } from '@material-ui/icons'
 
 import axios from 'axios';
@@ -24,18 +24,37 @@ const styles = theme => ({
     fab: {
         marginRight: theme.spacing.unit * 6,
         marginTop: theme.spacing.unit * 6,
-    }
+    },
+    formControl: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+
+    },
+    selectEmpty: {
+        marginTop: theme.spacing.unit,
+    },
 });
 
 class FullCasting extends Component {
     state = {
-        casting: null
+        casting: null,
+        clients: [],
+        jobs: []
     };
 
     componentDidMount() {
+        axios.get('https://megacastingapi.azurewebsites.net/clients')
+            .then(response => {
+                this.setState({ clients: response.data });
+            });
+        axios.get('https://megacastingapi.azurewebsites.net/jobs')
+            .then(response => {
+                this.setState({ jobs: response.data });
+            });
         if (this.props.match.params.id === 'new') {
             let casting = {};
             this.setState({ casting: casting });
+
         }
         else {
             axios.get('https://megacastingapi.azurewebsites.net/castings/' + this.props.match.params.id)
@@ -114,15 +133,17 @@ class FullCasting extends Component {
         if (this.state.casting) {
             casting = (
                 <form className={classes.container} noValidate autoComplete="casting">
-                    <TextField
-                        id="1"
-                        label="Titre"
-                        className={classes.textField}
-                        defaultValue={this.state.casting.title}
-                        style={{ width: 400 }}
-                        onChange={this.handleChange('title')}
-                        margin="normal"
-                    />
+                    <FormControl className={classes.formControl}>
+                        <TextField
+                            id="1"
+                            label="Titre"
+                            className={classes.textField}
+                            defaultValue={this.state.casting.title}
+                            style={{ width: 400 }}
+                            onChange={this.handleChange('title')}
+                            margin="normal"
+                        />
+                    </FormControl>
                     <TextField
                         id="2"
                         label="Date de publication"
@@ -152,14 +173,24 @@ class FullCasting extends Component {
                         style={{ width: 400 }}
                         margin="normal"
                     />
-                    <TextField
-                        id="5"
-                        label="Métier"
-                        className={classes.textField}
-                        defaultValue={this.state.casting.job}
-                        onChange={this.handleChange('job')}
-                        margin="normal"
-                    />
+                    <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="metier">Métier</InputLabel>
+                        <Select
+                            inputProps={{
+                                name: 'metier'
+                            }}
+                            className={classes.textField}
+                            value={this.state.casting.job}
+                            onChange={this.handleChange('job')}
+                        >
+                            <MenuItem>Aucun</MenuItem>
+                            {this.state.jobs.map(job => (
+                                <MenuItem key={job._id} value={job.name}>
+                                    {job.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     <TextField
                         id="6"
                         label="Contrat"
@@ -176,14 +207,24 @@ class FullCasting extends Component {
                         onChange={this.handleChange('location')}
                         margin="normal"
                     />
-                    <TextField
-                        id="8"
-                        label="Client"
-                        className={classes.textField}
-                        defaultValue={this.state.casting.client}
-                        onChange={this.handleChange('client')}
-                        margin="normal"
-                    />
+                    <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="client">Client</InputLabel>
+                        <Select
+                            inputProps={{
+                                name: 'client'
+                            }}
+                            className={classes.textField}
+                            value={this.state.casting.client}
+                            onChange={this.handleChange('client')}
+                        >
+                            <MenuItem>Aucun</MenuItem>
+                            {this.state.clients.map(client => (
+                                <MenuItem key={client._id} value={client.name}>
+                                    {client.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     <TextField
                         id="9"
                         label="Description"
@@ -196,6 +237,7 @@ class FullCasting extends Component {
                         rows={20}
                         rowsMax={25}
                     />
+
                 </form>
             )
         }
