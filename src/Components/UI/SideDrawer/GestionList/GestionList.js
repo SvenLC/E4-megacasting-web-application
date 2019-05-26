@@ -9,7 +9,7 @@ const styles = theme => ({
   },
 });
 
-class CastingList extends Component {
+class GestionList extends Component {
   state = {
     open: true,
   };
@@ -43,6 +43,11 @@ class CastingList extends Component {
                 <ListItemText primary="Partenaires" />
               </ListItem>
             </Link>
+            <Link to='/users' style={{ textDecoration: 'none' }}>
+              <ListItem button className={classes.nested}>
+                <ListItemText primary="Utilisateurs" />
+              </ListItem>
+            </Link>
           </List>
         </Collapse>
       </Fragment >
@@ -50,4 +55,4 @@ class CastingList extends Component {
   };
 }
 
-export default withStyles(styles)(CastingList);
+export default withStyles(styles)(GestionList);

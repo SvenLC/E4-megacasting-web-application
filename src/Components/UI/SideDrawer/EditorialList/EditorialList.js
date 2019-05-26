@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -34,12 +36,11 @@ class ReferentialList extends React.Component {
                 </ListItem>
                 <Collapse in={this.state.open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
+                    <Link to='/articles' style={{ textDecoration: 'none' }}>
                         <ListItem button className={classes.nested}>
                             <ListItemText primary="Article" />
                         </ListItem>
-                        <ListItem button className={classes.nested}>
-                            <ListItemText primary="Type" />
-                        </ListItem>
+                        </Link>
                     </List>
                 </Collapse>
             </React.Fragment>

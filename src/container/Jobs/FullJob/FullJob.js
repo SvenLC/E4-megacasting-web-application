@@ -37,8 +37,7 @@ class FullJob extends Component {
         job: null
     };
 
-    componentDidMount() {
-        console.log(this.props.match.params.id)
+    componentDidMount() {       
         if (this.props.match.params.id === 'new') {
             let job = {};
             this.setState({ job: job });

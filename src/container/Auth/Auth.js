@@ -5,15 +5,16 @@ import axios from '../../axios-request';
 
 
 const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
+     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         width: 200,
     },
+    button : {
+        marginTop: theme.spacing.unit,
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+    }
 })
 
 
@@ -24,6 +25,12 @@ class Auth extends Component {
             mdp: ''
         },
         dialog: false
+    }
+
+    
+
+    componentDidMount () {
+        localStorage.clear();
     }
 
     handleChange = name => event => {

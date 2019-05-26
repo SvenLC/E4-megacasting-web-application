@@ -1,7 +1,7 @@
 import React from 'react';
 import { Drawer, List, withStyles, Divider, Paper } from '@material-ui/core';
 
-import CastingList from './CastingList/CastingList';
+import GestionList from './GestionList/GestionList';
 import ReferentialList from './ReferentialList/ReferentialList';
 import EditorialList from './EditorialList/EditorialList';
 
@@ -29,7 +29,7 @@ const sideDrawer = (props) => {
                 classes={{ paper: classes.drawerPaper }}
                 anchor="left">
                 <List component="nav">
-                    <CastingList />
+                    <GestionList />
                     <Divider />
                     <ReferentialList />
                     <EditorialList />
