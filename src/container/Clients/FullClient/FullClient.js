@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
 
-import { withStyles, TextField, Fab } from '@material-ui/core';
+import { withStyles, TextField, Fab, Toolbar, Typography } from '@material-ui/core';
 import { Delete, Save } from '@material-ui/icons'
 
-import axios from 'axios';
+import axios from '../../../axios-request';
 
 const styles = theme => ({
     container: {
@@ -29,7 +29,7 @@ const styles = theme => ({
     }
 });
 
-class Client extends Component {
+class FullClient extends Component {
     state = {
         inputProps: false,
         client: null
@@ -42,7 +42,7 @@ class Client extends Component {
             this.setState({ client: client });
         }
         else {
-            axios.get('https://megacastingapi.azurewebsites.net/clients/' + this.props.match.params.id)
+            axios.get('/clients/' + this.props.match.params.id)
                 .then(response => {
                     this.setState({ client: response.data });
                 });
@@ -57,11 +57,13 @@ class Client extends Component {
 
         if (this.props.match.params.id === 'new') {
 
-            axios.post('https://megacastingapi.azurewebsites.net/clients/', {
-                name: this.state.name,
-                address: this.state.address,
-                legalStatus: this.state.legalStatus,
-                siret: this.state.siret,
+            axios.post('/clients/', {
+                name: this.state.client.name,
+                address: this.state.client.address,
+                email: this.state.client.email,
+                legalStatus: this.state.client.legalStatus,
+                siret: this.state.client.siret,
+                rna: this.state.client.rna
             })
                 .then((res) => {
 
@@ -73,13 +75,13 @@ class Client extends Component {
                 })
         }
         else {
-            axios.put('https://megacastingapi.azurewebsites.net/clients/' + this.props.match.params.id, {
-                name: this.state.name,
-                address: this.state.address,
-                email: this.state.email,
-                legalStatus: this.state.legalStatus,
-                siret: this.state.siret,
-                rna: this.state.rna
+            axios.put('/clients/' + this.props.match.params.id, {
+                name: this.state.client.name,
+                address: this.state.client.address,
+                email: this.state.client.email,
+                legalStatus: this.state.client.legalStatus,
+                siret: this.state.client.siret,
+                rna: this.state.client.rna
             })
                 .then((res) => {
 
@@ -94,7 +96,7 @@ class Client extends Component {
     }
 
     deleteClient = () => {
-        axios.delete('https://megacastingapi.azurewebsites.net/clients/' + this.props.match.params.id)
+        axios.delete('/clients/' + this.props.match.params.id)
             .then(response => {
                 this.props.history.push({ pathname: '/clients' });
             })
@@ -109,6 +111,12 @@ class Client extends Component {
 
         if (this.state.client) {
             cli = (
+                <Fragment>
+                    <Toolbar>
+                        <Typography variant="headline" style={{ flex: 3 }}>
+                            Client
+                        </Typography>
+                    </Toolbar>
                 <form className={classes.container} noValidate autoComplete="cli">
                     <TextField
                         id="1"
@@ -160,6 +168,7 @@ class Client extends Component {
                         margin="normal"
                     />
                 </form>
+                </Fragment>
             )
         }
 
@@ -180,4 +189,4 @@ class Client extends Component {
     }
 }
 
-export default withStyles(styles)(Client);
+export default withStyles(styles)(FullClient);

@@ -11,7 +11,10 @@ const styles = {
     }
 };
 
+
+
 const appBar = (props) => {
+    
     const { classes } = props;
     return (
         <div className={classes.root}>
@@ -20,7 +23,7 @@ const appBar = (props) => {
                     <Typography variant="h6" color="inherit" className={classes.grow}>
                         MegaCasting
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button color="inherit" >{localStorage.getItem('userLogin')}</Button>
                 </Toolbar>
             </AppBar>
         </div>

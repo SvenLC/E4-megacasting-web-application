@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import axios from 'axios';
+import axios from '../../axios-request';
 import { withStyles, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import shortid from 'shortid'
 
@@ -43,7 +43,7 @@ class Castings extends Component {
     }
 
     componentDidMount() {
-        axios.get('https://megacastingapi.azurewebsites.net/castings')
+        axios.get('/castings')
             .then(res => {
                 this.setState({ castings: res.data });
             })
@@ -101,7 +101,7 @@ class Castings extends Component {
 
         return (
             <Fragment>
-                <ToolBar name={'Castings'} newElement={this.newCastingClickHandler} />
+                <ToolBar name={'Casting'} newElement={this.newCastingClickHandler} />
                 <Table className={classes.table}>
                     <TableHead fields={castingFields} />
                     <TableBody>

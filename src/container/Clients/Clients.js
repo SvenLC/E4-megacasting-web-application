@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import axios from 'axios';
+import axios from '../../axios-request';
 import { withStyles, Table, TableBody, TableRow, TableCell } from '@material-ui/core';
 import shortid from 'shortid'
 
@@ -35,7 +35,7 @@ class Clients extends Component {
     }
 
     componentDidMount() {
-        axios.get('https://megacastingapi.azurewebsites.net/clients')
+        axios.get('/clients')
             .then(res => {
                 this.setState({ clients: res.data });
 

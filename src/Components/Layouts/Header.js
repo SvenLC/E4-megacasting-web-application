@@ -6,13 +6,20 @@ import SideDrawer from '../UI/SideDrawer/SideDrawer';
 import Dashboard from '../UI/Dashboard/Dashboard';
 
 const Layout = (props) => {
+    let sideDrawer = null;
+
+    if (localStorage.getItem('isAuth')) {
+        sideDrawer = <SideDrawer />
+    }
+
+
     return (
         <Fragment>
             <AppBar />
             <div style={{ margin: '0 auto', width: '1400px' }}>
                 <Grid container>
                     <Grid item xs={2}>
-                        <SideDrawer />
+                        {sideDrawer}
                     </Grid>
                     <Grid item xs={10} >
                         <Dashboard>

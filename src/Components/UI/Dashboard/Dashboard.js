@@ -7,13 +7,12 @@ const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
-        width: '100%',
+        paddingBottom: theme.spacing.unit * 2,        
         marginTop: theme.spacing.unit * 2,
         marginLeft: theme.spacing.unit * 2,
         marginRight: theme.spacing.unit * 2,
         overflowX: 'auto',
-        maxWidth: 'auto'
+        
     }
 });
 
@@ -23,8 +22,6 @@ const Dashboard = (props) => {
     return (
         <div>
             <Paper className={classes.root}>
-
-
                 {props.children}
             </Paper>
         </div>

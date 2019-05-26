@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -10,11 +11,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 
 
 const styles = theme => ({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
+
     nested: {
         paddingLeft: theme.spacing.unit * 4,
     },
@@ -39,15 +36,16 @@ class ReferentialList extends React.Component {
                 </ListItem>
                 <Collapse in={this.state.open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
+                    <Link to='/contracts' style={{ textDecoration: 'none' }}>
                         <ListItem button className={classes.nested}>
                             <ListItemText primary="Contrat" />
                         </ListItem>
-                        <ListItem button className={classes.nested}>
-                            <ListItemText primary="Domaine de métiers" />
-                        </ListItem>
-                        <ListItem button className={classes.nested}>
-                            <ListItemText primary="Métiers" />
-                        </ListItem>
+                        </Link>
+                        <Link to='/jobs' style={{ textDecoration: 'none' }}>
+                            <ListItem button className={classes.nested}>                        
+                                <ListItemText primary="Métiers" />                            
+                            </ListItem>
+                        </Link>
                     </List>
                 </Collapse>
             </React.Fragment>

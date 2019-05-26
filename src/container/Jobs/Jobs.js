@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
+
 import axios from '../../axios-request';
 import { withStyles, Table, TableBody, TableRow, TableCell } from '@material-ui/core';
-import shortid from 'shortid'
+import shortid from 'shortid';
 
 import ToolBar from '../../Components/Tables/ToolBar/ToolBar';
 import TableHead from '../../Components/Tables/TableHead/TableHead';
@@ -17,33 +18,37 @@ const styles = theme => ({
     },
 });
 
-const partnerFields = {
+const jobFields = {
     ref: 'Référence',
-    name: 'Nom',
-    login: 'Identifiant',
-    mdp: 'Mot de passe'
+    name: 'Nom'
 }
 
-class Partners extends Component {
+
+
+class Jobs extends Component {
     state = {
-        partners: []
+        jobs: []
     }
 
     componentDidMount() {
-        axios.get('/partners')
+        axios.get('/jobs', )
             .then(res => {
-                this.setState({ partners: res.data });
+                this.setState({ jobs: res.data });
+
             })
-            .catch(() => { });
+            .catch(() => {
+
+            });
     }
 
-    partnerClickHandler = (partner) => {
-        this.setState({ partner: partner });
-        this.props.history.push({ pathname: '/partner/' + partner._id });
+    jobClickHandler = (job) => {
+        this.setState({ job: job });
+        this.props.history.push({ pathname: '/job/' + job._id });
+
     }
 
-    newPartnerClickHandler = () => {
-        this.props.history.push({ pathname: '/partner/new' });
+    newJobClickHandler = () => {
+        this.props.history.push({ pathname: '/job/new' });
     }
 
     formatData = (data, fieldsName) => {
@@ -52,11 +57,14 @@ class Partners extends Component {
 
         for (let fields of arrayFieldsName) {
             formatedData[fields] = data[fields]
+
         }
         return formatedData;
+
     }
 
     formatId = (list) => {
+
         list.forEach(element => {
             if (element._id) {
                 element['ref'] = element._id.substr(-8);
@@ -67,18 +75,18 @@ class Partners extends Component {
 
     render() {
         const { classes } = this.props;
-        this.formatId(this.state.partners);
+        this.formatId(this.state.jobs);
 
         return (
             <Fragment>
-                <ToolBar name={'Partenaire'} newElement={this.newPartnerClickHandler} />
+                <ToolBar name={'Métier'} newElement={this.newJobClickHandler} />
                 <Table className={classes.table}>
-                    <TableHead fields={partnerFields} />
+                    <TableHead fields={jobFields} />
                     <TableBody>
-                        {this.state.partners.map(partner => (
-                            <TableRow hover key={partner._id} onClick={() => this.partnerClickHandler(partner)}>
-                                {Object.values(this.formatData(partner, partnerFields)).map(field => (
-                                    <TableCell key={shortid.generate()} data={this.formatData(partner, partnerFields)}>{field}</TableCell>
+                        {this.state.jobs.map(job => (
+                            <TableRow hover key={job._id} onClick={() => this.jobClickHandler(job)}>
+                                {Object.values(this.formatData(job, jobFields)).map(field => (
+                                    <TableCell key={shortid.generate()} data={this.formatData(job, jobFields)}>{field}</TableCell>
                                 ))}
                             </TableRow>
                         ))}
@@ -94,4 +102,4 @@ class Partners extends Component {
 }
 
 
-export default withStyles(styles)(Partners);
+export default withStyles(styles)(Jobs);
